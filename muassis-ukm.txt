@@ -1,0 +1,8 @@
+/muassis-ukm
+├── public/
+│   ├── index.html       (Paparan Berita - Netizen)
+│   ├── admin.html       (Dashboard Penulis)
+│   └── style.css
+├── functions/
+│   └── api.js           (Cloudflare Workers - Logic Backend)
+└── package.json
