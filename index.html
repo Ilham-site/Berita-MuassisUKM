@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Berita MuassisUKM</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>MuassisUKM News</h1>
+        <nav>
+            <button onclick="fetchBerita('Terkini')">Terkini</button>
+            <button onclick="fetchBerita('Sukan')">Sukan</button>
+            <button onclick="fetchBerita('Popular')">Popular</button>
+        </nav>
+    </header>
+
+    <main id="news-container">
+        <p>Memuatkan berita...</p>
+    </main>
+
+    <script>
+        async function fetchBerita(category = 'Terkini') {
+            const res = await fetch(`/api/news?cat=${category}`);
+            const data = await res.json();
+            const container = document.getElementById('news-container');
+            container.innerHTML = data.map(news => `
+                <article class="card">
+                    <img src="${news.thumbnail}" alt="Headline">
+                    <h2>${news.headline}</h2>
+                    <p>${news.excerpt}...</p>
+                    <small>${news.date} | ${news.category}</small>
+                </article>
+            `).join('');
+        }
+        fetchBerita();
+    </script>
+</body>
+</html>

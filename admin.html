@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <title>Admin - Tulis Berita</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="admin-form">
+        <h2>Tulis Berita Baru</h2>
+        <input type="text" id="headline" placeholder="Headline Berita">
+        <select id="category">
+            <option value="Terkini">Terkini</option>
+            <option value="Sukan">Sukan</option>
+            <option value="Kecemasan">Kecemasan</option>
+        </select>
+        <textarea id="content" placeholder="Isi berita..."></textarea>
+        <input type="file" id="images" multiple>
+        <button onclick="submitBerita()">Terbitkan Berita</button>
+    </div>
+
+    <script>
+        async function submitBerita() {
+            const formData = new FormData();
+            formData.append('headline', document.getElementById('headline').value);
+            formData.append('category', document.getElementById('category').value);
+            formData.append('content', document.getElementById('content').value);
+            
+            const files = document.getElementById('images').files;
+            for(let i=0; i<files.length; i++) {
+                formData.append('files', files[i]);
+            }
+
+            const res = await fetch('/api/upload', {
+                method: 'POST',
+                body: formData
+            });
+            
+            if(res.ok) alert('Berita berjaya diterbitkan!');
+        }
+    </script>
+</body>
+</html>
